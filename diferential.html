@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>clases - Diferenciacion numérica</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Diferenciacion numérica</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">clases</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Cálculo numérico</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Introducción</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Intalacion.html" class="sidebar-item-text sidebar-link">Instalación Phyton</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_1.html" class="sidebar-item-text sidebar-link">Introducción a Python - Parte 1</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_2.html" class="sidebar-item-text sidebar-link">Introducción a Python - Parte 2</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_3.html" class="sidebar-item-text sidebar-link">Introducción a Python - Parte 3</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_4.html" class="sidebar-item-text sidebar-link"><strong>Introducción a Python - Parte 4</strong></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_5.html" class="sidebar-item-text sidebar-link"><strong>Introducción a Python - Parte 5</strong></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_numpy.html" class="sidebar-item-text sidebar-link">Errores</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Raices</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biseccion.html" class="sidebar-item-text sidebar-link">Método de la bisección</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./newton.html" class="sidebar-item-text sidebar-link">Newton Rapshon</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./punto_fijo.html" class="sidebar-item-text sidebar-link">Método del punto fijo</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Talleres</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller.html" class="sidebar-item-text sidebar-link">Método de la bisección</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller_resumen_1.html" class="sidebar-item-text sidebar-link">Taller Resumen</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">Sistemas de Ecuaciones</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normas.html" class="sidebar-item-text sidebar-link">Normas</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sistemas.html" class="sidebar-item-text sidebar-link">Solución de sistemas de ecuaciones lineales</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cholesky.html" class="sidebar-item-text sidebar-link">Cholesky</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Gauss-seidel2.html" class="sidebar-item-text sidebar-link">Jacobi y Gauss-Seidel</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./proyecto2.html" class="sidebar-item-text sidebar-link">Proyecto 2</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller_parcial2.html" class="sidebar-item-text sidebar-link">taller_parcial2.html</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">Aproximación de funciones</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller_inter.html" class="sidebar-item-text sidebar-link">Taller interpolación</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./splines.html" class="sidebar-item-text sidebar-link">Splines</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller_3.html" class="sidebar-item-text sidebar-link">Taller 3</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Integrales y diferenciación</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./integracion.html" class="sidebar-item-text sidebar-link">Integración numérica</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller_inter.html" class="sidebar-item-text sidebar-link">Taller interpolación</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diferential.html" class="sidebar-item-text sidebar-link active">Diferenciacion numérica</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">Ecuaciones diferenciales ordinarias</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ode_euler.html" class="sidebar-item-text sidebar-link">Simulación de ecuaciones diferenciales</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#aproxiamción-de-la-derivada-de-una-función-en-un-punto" id="toc-aproxiamción-de-la-derivada-de-una-función-en-un-punto" class="nav-link active" data-scroll-target="#aproxiamción-de-la-derivada-de-una-función-en-un-punto">Aproxiamción de la derivada de una función en un punto</a>
+  <ul class="collapse">
+  <li><a href="#regla-de-taylor" id="toc-regla-de-taylor" class="nav-link" data-scroll-target="#regla-de-taylor">Regla de taylor</a></li>
+  <li><a href="#aproximación-para-una-función-aproximada-por-puntos" id="toc-aproximación-para-una-función-aproximada-por-puntos" class="nav-link" data-scroll-target="#aproximación-para-una-función-aproximada-por-puntos">Aproximación para una función aproximada por puntos</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Diferenciacion numérica</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="aproxiamción-de-la-derivada-de-una-función-en-un-punto" class="level1">
+<h1>Aproxiamción de la derivada de una función en un punto</h1>
+<section id="regla-de-taylor" class="level2">
+<h2 class="anchored" data-anchor-id="regla-de-taylor">Regla de taylor</h2>
+<p>La regla de Taylor es una aproximación de una función en un punto, mediante una serie de Taylor truncada. La serie de Taylor de una función <span class="math inline">\(f(x)\)</span> alrededor de un punto <span class="math inline">\(x_0\)</span> es:</p>
+<p><span class="math display">\[f(x) = f(x_0) + \frac{f'(x_0)}{1!}(x-x_0) + \frac{f''(x_0)}{2!}(x-x_0)^2 + \frac{f'''(x_0)}{3!}(x-x_0)^3 + \cdots\]</span></p>
+<p>nosotros podemos substituir <span class="math inline">\(x\)</span> por <span class="math inline">\(x_0+h\)</span> para obtener:</p>
+<p><span class="math display">\[f(x_0+h) = f(x_0) + \frac{f'(x_0)}{1!}h + \frac{f''(x_0)}{2!}h^2 + \frac{f'''(x_0)}{3!}h^3 + \cdots\]</span></p>
+<p>note que esta serie la podemos truncar en el término que deseemos, por ejemplo, si truncamos en el término <span class="math inline">\(h^2\)</span> obtenemos:</p>
+<p><span class="math display">\[f(x_0+h) \approx f(x_0) + \frac{f'(x_0)}{1!}h + \mathcal{O}(h^2),\]</span> y si despejamos <span class="math inline">\(f'(x_0)\)</span> obtenemos:</p>
+<p><span class="math display">\[f'(x_0) \approx \frac{f(x_0+h) - f(x_0)}{h}+ \mathcal{O}(h).\]</span></p>
+<p>Note que <span class="math inline">\(\mathcal{O}(h^2)/h= \mathcal{O}(h)\)</span> y representa el error de truncamiento de la serie de Taylor y necesita evaluar al función en dos puntos <span class="math inline">\(x_0+h\)</span> y <span class="math inline">\(x_0\)</span>. De esta forma, podemos decir que la aproxiamciópn de la derivada de la función <span class="math inline">\(f(x)\)</span> en el punto <span class="math inline">\(x_0\)</span> de orden 1 es: <span class="math display">\[f'(x_0) \approx \frac{f(x_0+h) - f(x_0)}{h}.\]</span></p>
+<p><strong>Podemos crear más aproximaciones de la primera derivada</strong> de segundo o tercer orden, vamos a mostrar el procedimiento, para ello usamos la serie de Taylor truncada y substituimos <span class="math inline">\(x\)</span> por <span class="math inline">\(x_0+h\)</span> y <span class="math inline">\(x_0-h\)</span> respectivamente:</p>
+<p><span class="math display">\[f(x_0+h) = f(x_0) + \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 + \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots\]</span></p>
+<p>y</p>
+<p><span class="math display">\[f(x_0-h) = f(x_0) - \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 - \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 -\cdots\]</span></p>
+<p>restando estas dos ecuaciones obtenemos:</p>
+<p><span class="math display">\[f(x_0+h) - f(x_0-h) = 2f^{(1)}(x_0)h + 2\frac{f^{(3)}(x_0)}{3!}h^3 + 2\frac{f^{(5)}(x_0)}{5!}h^5 + \cdots\]</span></p>
+<p>Al despexar <span class="math inline">\(f^{(1)}(x_0)\)</span> obtenemos:</p>
+<p><span class="math display">\[f^{(1)}(x_0) = \frac{f(x_0+h) - f(x_0-h)}{2h} - \frac{f^{(3)}(x_0)}{3!}h^2 - \frac{f^{(5)}(x_0)}{5!}h^4 - \cdots\]</span> <span class="math display">\[f^{(1)}(x_0) \approx \frac{f(x_0+h) - f(x_0-h)}{2h}+\mathcal{O}(h^2)\]</span></p>
+<p>Note que esta aproximación es de segundo orden pero necesita evaluar la función en tres puntos distintos, <span class="math inline">\(x_0\)</span>, <span class="math inline">\(x_0+h\)</span> y <span class="math inline">\(x_0-h\)</span>. De aqui podemos concluir que podemos hacer aproximaciones de la primera derivada de mayor orden pero para ello necesitamos evaluar la función en más puntos. Supongamso que queremos crear una aproximación de la primera derivada de orden 3, centrada en el punto <span class="math inline">\(x_0\)</span>, como muestra la figura:</p>
+<p><img src="figures/diferencias.png" class="img-fluid"></p>
+<p>Usando la serie de Taylor truncada en <span class="math inline">\(x_0-h\)</span>, <span class="math inline">\(x_0\)</span>,<span class="math inline">\(x_0+h\)</span> y <span class="math inline">\(x_0+2h\)</span> obtenemos:</p>
+<p><span class="math display">\[\begin{align}
+f(x_0-h) &amp;= f(x_0) - \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 - \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 -\cdots\\
+f(x_0) &amp;= f(x_0)\\
+f(x_0+h) &amp;= f(x_0) + \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 + \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots\\
+f(x_0+2h)&amp;= f(x_0) + 2\frac{f^{(1)}(x_0)}{1!}h + 4\frac{f^{(2)}(x_0)}{2!}h^2 + 8\frac{f^{(3)}(x_0)}{3!}h^3 +  16\frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots \end{align}\]</span></p>
+<p>de estas ecuaciones, queremos construir un sistema de ecuaciones lineales, para ello multiplicamos cada ecuación anterior por un factor y las sumamos, de esta forma: <span class="math display">\[\begin{align}
+{\color{red}a_1}f(x_0-h) &amp;={\color{red}a_1}\Big( f(x_0) - \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 - \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 -\cdots\Big)\\
+{\color{red}a_2}f(x_0) &amp;= {\color{red}a_2}f(x_0)\\
+{\color{red}a_3}f(x_0+h) &amp;= {\color{red}a_3}\Big(f(x_0) + \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 + \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots\Big)\\
+{\color{red}a_4}f(x_0+2h)&amp;= {\color{red}a_4}\Big(f(x_0) + 2\frac{f^{(1)}(x_0)}{1!}h + 4\frac{f^{(2)}(x_0)}{2!}h^2 + 8\frac{f^{(3)}(x_0)}{3!}h^3 +  16\frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots\Big) \end{align}\]</span></p>
+<p>de esta forma construimos el sistema</p>
+<p><span class="math display">\[\begin{align}a_1f(x_0-h) + a_2f(x_0) + a_3f(x_0+h) + a_4f(x_0+2h) &amp;= \\
+&amp;f(x_0)(a_1+a_2+a_3+a_4)+\frac{f^{(1)}(x_0)}{1!}h\Big(-a_1+a_3+2a_4\Big)+\frac{f^{(2)}(x_0)}{2!}h^2\Big(a_1+a_3+4a_4\Big)\\
+&amp;+\frac{f^{(3)}(x_0)}{3!}h^3\Big(-a_1+a_3+8a_4\Big)+\cdots
+\end{align}\]</span></p>
+<p><strong>Note</strong> para que la aproximación sea de orden 3, necesitamos que los coeficientes de <span class="math inline">\(f(x_0)\)</span> y <span class="math inline">\(f^{(2)}(x_0)\)</span> y <span class="math inline">\(f^{(3)}\)</span> sean cero y el coeficiente de <span class="math inline">\(f^{(1)}(x_0)\)</span> sea <span class="math inline">\(\frac{1}{h}\)</span> de esta forma obtenemos el sistema de ecuaciones:</p>
+<p><span class="math display">\[\begin{align}a_1+a_2+a_3+a_4 &amp;= 0\\
+-a_1+a_3+2a_4 &amp;= \frac{1}{h}\\
+a_1+a_3+4a_4 &amp;= 0\\
+-a_1+a_3+8a_4 &amp;= 0
+\end{align}\]</span></p>
+<p>de esta forma encontramos que la ssolución del sistema es <span class="math inline">\(a_1=a_3=\frac{1}{12h}\)</span> y <span class="math inline">\(a_2=a_4=-\frac{2}{3h}\)</span>, por lo tanto la aproximación de la primera derivada de orden 3 es:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the variables</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>a1,a2,a3,a4, h <span class="op">=</span> sp.symbols(<span class="st">'a_1 a_2 a_3 a_4 h'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the equations</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>eq1 <span class="op">=</span> sp.Eq(a1<span class="op">+</span>a2<span class="op">+</span>a3<span class="op">+</span>a4, <span class="dv">0</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>eq2 <span class="op">=</span> sp.Eq(<span class="op">-</span>a1<span class="op">+</span>a3<span class="op">+</span><span class="dv">2</span><span class="op">*</span>a4, <span class="dv">1</span><span class="op">/</span>h)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>eq3 <span class="op">=</span> sp.Eq(a1<span class="op">+</span>a3<span class="op">+</span><span class="dv">4</span><span class="op">*</span>a4, <span class="dv">0</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>eq4 <span class="op">=</span> sp.Eq(<span class="op">-</span>a1<span class="op">+</span>a3<span class="op">+</span><span class="dv">8</span><span class="op">*</span>a4, <span class="dv">0</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the system of equations</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> sp.solve((eq1,eq2,eq3,eq4), (a1,a2,a3,a4))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>solution</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>{a_1: -1/(3*h), a_2: -1/(2*h), a_3: 1/h, a_4: -1/(6*h)}</code></pre>
+</div>
+</div>
+<p>usnado sympy podemos encontrar la aproximación de la primera derivada de orden 3:</p>
+<p><span class="math display">\[f(x_0)=-\frac{1}{3h}f(x_0-h)+\frac{1}{2h}f(x_0)+\frac{1}{h}f(x_0+h)-\frac{1}{6h}f(x_0+2h)+\mathcal{O}(h^3)\]</span></p>
+<p><strong>note</strong> que ahciendo un procedimiento similar podemos encontrar la aproximación de la primera derivada de orden 5, 7, 9, etc. Adicionalmente podemos encontrar la aproximación de la segunda derivada de orden 2, 4, 6, etc.</p>
+<p><strong>Aproximación de la segunda derivada</strong></p>
+<p>Usando la serie de Taylor truncada en <span class="math inline">\(x_0-h\)</span>, <span class="math inline">\(x_0\)</span>,<span class="math inline">\(x_0+h\)</span> y <span class="math inline">\(x_0+2h\)</span> obtenemos:</p>
+<p><span class="math display">\[\begin{align}
+f(x_0-h) &amp;= f(x_0) - \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 - \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 -\cdots\\
+f(x_0) &amp;= f(x_0)\\
+f(x_0+h) &amp;= f(x_0) + \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 + \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots\\
+\end{align}\]</span></p>
+<p>de estas ecuaciones, queremos construir un sistema de ecuaciones lineales, para ello multiplicamos cada ecuación anterior por un factor y las sumamos, de esta forma:</p>
+<p><span class="math display">\[\begin{align}
+{\color{red}a_1}f(x_0-h) &amp;={\color{red}a_1}\Big( f(x_0) - \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 - \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 -\cdots\Big)\\
+{\color{red}a_2}f(x_0) &amp;= {\color{red}a_2}f(x_0)\\
+{\color{red}a_3}f(x_0+h) &amp;= {\color{red}a_3}\Big(f(x_0) + \frac{f^{(1)}(x_0)}{1!}h + \frac{f^{(2)}(x_0)}{2!}h^2 + \frac{f^{(3)}(x_0)}{3!}h^3 +  \frac{f^{(iv)}(x_0)}{4!}h^4 +\cdots\Big)
+\end{align}\]</span></p>
+<p>Así tenemos el sistema de ecuaciones:</p>
+<p><span class="math display">\[\begin{align}
+a_1f(x_0-h) + a_2f(x_0) + a_3f(x_0+h) &amp;= \\
+&amp;f(x_0)(a_1+a_2+a_3)+\frac{f^{(1)}(x_0)}{1!}h\Big(-a_1+a_3\Big)+\frac{f^{(2)}(x_0)}{2!}h^2\Big(a_1+a_3\Big)\\
+&amp;+\frac{f^{(3)}(x_0)}{3!}h^3\Big(-a_1+a_3\Big)+\frac{f^{(3)}(x_0)}{4!}h^4\Big(a_1+a_3\Big)\cdots
+\end{align}\]</span></p>
+<p><strong>Note</strong> que para aproximar la segunda derivada de orden 2, necesitamos que los coeficientes de <span class="math inline">\(f(x_0)\)</span> y <span class="math inline">\(f^{(3)}(x_0)\)</span> sean cero y el coeficiente de <span class="math inline">\(f^{(1)}(x_0)\)</span> sea <span class="math inline">\(\frac{1}{h^2}\)</span> de esta forma obtenemos el sistema de ecuaciones:</p>
+<p><span class="math display">\[\begin{align}
+a_1+a_2+a_3 &amp;= 0\\
+-a_1+a_3 &amp;= 0\\
+a_1+a_3 &amp;= \frac{1}{h^2}
+\end{align}\]</span></p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sp</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the variables</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>a1,a2,a3, h <span class="op">=</span> sp.symbols(<span class="st">'a_1 a_2 a_3 h'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the equations</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>eq1 <span class="op">=</span> sp.Eq(a1<span class="op">+</span>a2<span class="op">+</span>a3, <span class="dv">0</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>eq2 <span class="op">=</span> sp.Eq(<span class="op">-</span>a1<span class="op">+</span>a3, <span class="dv">0</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>eq3 <span class="op">=</span> sp.Eq(a1<span class="op">+</span>a3, <span class="dv">2</span><span class="op">/</span>h<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the system of equations</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> sp.solve((eq1,eq2,eq3), (a1,a2,a3))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>solution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>{a_1: h**(-2), a_2: -2/h**2, a_3: h**(-2)}</code></pre>
+</div>
+</div>
+<p>como <span class="math inline">\(a_1\)</span> y <span class="math inline">\(a_3\)</span> son iguales note que el termino de la tercera derivada se anula, por lo tanto la aproximación es de segundo orden y es de la forma</p>
+<p><span class="math display">\[\frac{f(x_0+h)-2f(x_0)+f(x_0-h)}{h^2}=f^{(2)}(x_0)+\mathcal{O}(h^2)\]</span></p>
+</section>
+<section id="aproximación-para-una-función-aproximada-por-puntos" class="level2">
+<h2 class="anchored" data-anchor-id="aproximación-para-una-función-aproximada-por-puntos">Aproximación para una función aproximada por puntos</h2>
+<p>Supongamos que tenemos una lista de puntos <span class="math inline">\((x_i,y_i)\)</span>, <span class="math inline">\(i=0,1,2,\cdots,n\)</span> donde los puntos <span class="math inline">\(x_i\)</span> son equiespaciados y queremos aproximar la derivada de la función <span class="math inline">\(f(x)\)</span> en el punto <span class="math inline">\(x_i\)</span>, para ello podemos usar la aproximación de la derivada de orden 1, 2, centrada en el punto <span class="math inline">\(x_i\)</span>, de esta forma:</p>
+<p>Para el primer orden de aproximación: <span class="math display">\[f'(x_i) \approx \frac{f(x_i+h) - f(x_i)}{h}\]</span> para el segundo orden de aproximación: <span class="math display">\[f'(x_i) \approx \frac{f(x_i) - f(x_i-h)}{h}\]</span></p>
+<p><strong>Note</strong> que para el primer orden solo se puede aproximar las derivadas de los puntos <span class="math inline">\(x_0\)</span> hasta <span class="math inline">\(x_{n-1}\)</span> y para el segundo orden solo se puede aproximar las derivadas de los puntos <span class="math inline">\(x_1\)</span> hasta <span class="math inline">\(x_{n}\)</span>**.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">**</span><span class="dv">3</span><span class="op">+</span><span class="dv">2</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Derivate of the function</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> df(x):</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">3</span><span class="op">*</span>x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the interval</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>x,h <span class="op">=</span> np.linspace(a,b,<span class="dv">100</span>,retstep<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>f(x)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span> df(x)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the function</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y, label<span class="op">=</span><span class="st">'f(x)'</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.plot(x,df, label<span class="op">=</span><span class="st">'df(x)'</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Function and real derivate'</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="diferential_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">## aproximate the derivate of firth order</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df1<span class="op">=</span>(y[<span class="dv">1</span>:]<span class="op">-</span>y[<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>h</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df2<span class="op">=</span>(y[<span class="dv">2</span>:]<span class="op">-</span>y[<span class="dv">0</span>:<span class="op">-</span><span class="dv">2</span>])<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>h)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.plot(x[<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>],df1, label<span class="op">=</span><span class="st">'1 order df(x)'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.plot(x[<span class="dv">0</span>:<span class="op">-</span><span class="dv">2</span>],df2, label<span class="op">=</span><span class="st">'2 order df(x)'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x,df, label<span class="op">=</span><span class="st">'real df(x)'</span>)   </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Function and aproximate derivate'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="diferential_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Si calculamos el error de cada aproximación obtenemos:</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Error de aproximacion</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>error1<span class="op">=</span>np.linalg.norm(df1<span class="op">-</span>df[<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>error2<span class="op">=</span>np.linalg.norm(df2<span class="op">-</span>df[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'error1='</span>,error1)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'error2='</span>,error2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>error1= 0.17363602561208802
+error2= 0.001010049478277235</code></pre>
+</div>
+</div>
+<p><strong>Note</strong> que se hace evidente que la aproximación de primer orden es de orden 1 es peor que la aproximación de segundo orden es de orden 2.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

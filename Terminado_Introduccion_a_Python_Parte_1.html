@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>clases – terminado_introduccion_a_python_parte_1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">clases</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./presentacion.html">
+ <span class="menu-text">Primeros pasos con Phyton</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Python_Parte_1.html">
+ <span class="menu-text">Introducción a Python - Parte 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Python_Parte_2.html">
+ <span class="menu-text">Introducción a Python - Parte 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Python_Parte_3.html">
+ <span class="menu-text">Introducción a Python - Parte 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Python_Parte_4.html">
+ <span class="menu-text"><strong>Introducción a Python - Parte 4</strong></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Python_Parte_5.html">
+ <span class="menu-text"><strong>Introducción a Python - Parte 5</strong></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#taller-de-verano-introducción-a-python---parte-1" id="toc-taller-de-verano-introducción-a-python---parte-1" class="nav-link active" data-scroll-target="#taller-de-verano-introducción-a-python---parte-1">Taller de verano: Introducción a Python - Parte 1</a></li>
+  <li><a href="#lenguaje-de-programación-python" id="toc-lenguaje-de-programación-python" class="nav-link" data-scroll-target="#lenguaje-de-programación-python"><strong>Lenguaje de programación Python</strong></a>
+  <ul class="collapse">
+  <li><a href="#entrada-y-salida" id="toc-entrada-y-salida" class="nav-link" data-scroll-target="#entrada-y-salida"><strong>2. Entrada y salida</strong></a></li>
+  <li><a href="#tipos-de-dato-y-operadores" id="toc-tipos-de-dato-y-operadores" class="nav-link" data-scroll-target="#tipos-de-dato-y-operadores"><strong>3. Tipos de dato y operadores</strong></a></li>
+  <li><a href="#cadenas-de-texto" id="toc-cadenas-de-texto" class="nav-link" data-scroll-target="#cadenas-de-texto">### <strong>3.1. Cadenas de texto</strong></a>
+  <ul class="collapse">
+  <li><a href="#valores-y-operadores-numéricos" id="toc-valores-y-operadores-numéricos" class="nav-link" data-scroll-target="#valores-y-operadores-numéricos"><strong>3.2. Valores y operadores numéricos</strong></a></li>
+  </ul></li>
+  <li><a href="#operados-logicos" id="toc-operados-logicos" class="nav-link" data-scroll-target="#operados-logicos">Operados logicos</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<p><a href="https://colab.research.google.com/github/isahdez423/IntroduccionPython/blob/main/Terminado_Introduccion_a_Python_Parte_1.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<section id="taller-de-verano-introducción-a-python---parte-1" class="level1">
+<h1>Taller de verano: Introducción a Python - Parte 1</h1>
+<p><code>**Nombre: Isabella Hernandez**</code></p>
+<p>Hola</p>
+<pre><code># Tiene formato de código</code></pre>
+<div class="cell" data-outputid="4d116fb1-525d-47ad-d0df-df3688d13401">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hola mundo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hola mundo</code></pre>
+</div>
+</div>
+</section>
+<section id="lenguaje-de-programación-python" class="level1">
+<h1><strong>Lenguaje de programación Python</strong></h1>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><img src="https://www.python.org/static/community_logos/python-logo-inkscape.svg" alt="Python Logo" width="70%"> </td>
+</tr>
+<tr class="even">
+<td>Python es un lenguaje de programación de propósito general muy poderoso y flexible, a la vez que sencillo y fácil de aprender. Es un lenguaje de alto nivel, que permite procesar fácilmente todo tipo de estructuras de datos, tanto numéricos como de texto. <img src="attachment:image.png" class="img-fluid" alt="image.png"> Python fue creado a principio de los 1990 desarrollado por Guido Van Rossum a manera de hobby. Este fue un ingeniero holandés se encontraba trabajando en aquel entonces en el Centro de Investigación de Ciencias de la Computación, en Amsterdam. El nombre de Python fue seleccionado del grupo de comedia británico Monty Python, debido a que Guido era un fanático de este.</td>
+</tr>
+<tr class="odd">
+<td>## <strong>1. Comentarios</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Un comentario es una línea de texto no ejecutable, esto quiere decir que el compilador o intérprete no la tomará como una línea de código. Los comentarios en Python, así como en otros lenguajes de programación, sirven para dejar pequeñas explicaciones sobre qué es lo que hace el programa.</p>
+<div class="cell" data-outputid="48009245-76ef-4e5a-a8cd-db74a0a0247c">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hola, estoy comentando en Python</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Mostramos esto por pantalla"</span>) <span class="co">#Aquí se mejora la comprensión del código </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mostramos esto por pantalla</code></pre>
+</div>
+</div>
+<p>A continuación, se crea una cadena de texto multilínea la cual no se asigna a ninguna variable. Al no asignarse a una variable su uso es nulo y por esta razón, podemos utilizarla para realizar comentarios.</p>
+<div class="cell" data-outputid="3f775fc1-424a-4edf-e33f-c1a0a9e2f3cb">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="st">"hola"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hola</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="ba6d2ffb-da6c-481c-eb4d-f8cfdf9ad9de">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">Hola, soy un comentario</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">con varias líneas</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>'\nHola, soy un comentario\ncon varias líneas\n'</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Nota:</strong> Técnicamente las expresiones con la notación con tres comillas <code>'''</code> no son comentarios validos de <em>Python</em>, pero en la mayoría de casos se comportan de manera similar y se pueden utilizar como tal.</p>
+</blockquote>
+<section id="entrada-y-salida" class="level2">
+<h2 class="anchored" data-anchor-id="entrada-y-salida"><strong>2. Entrada y salida</strong></h2>
+<p>Los programas escritos en <em>Python</em> y los entornos de ejecución (como <em>Google Colab</em>) permiten al usuario interactuar de formas distintas. El usuario introduce información en forma de archivos, datos en la nube, o acciones de periféricos como el teclado y ratón, y los entornos de ejecución ejecutan el programa de <em>Python</em>. En consecuencia, le devuelven al usuario una respuesta en forma de texto, imagen o contenidos interactivos complejos. A continuación, conocera las funciones de <strong>entrada y salida de texto</strong>. Las más comunes y más útiles en los primeros pasos del aprendizaje del lenguaje son las funciones <strong><code>input</code></strong> y <strong><code>print</code></strong>.</p>
+<p>Cuando se ejecuta <strong><code>input()</code></strong> la consola de Python espera que se le entregue texto, que puede escribir con su teclado o pegar del portapapeles, para luego hacer algo con este, como almacenarlo en una variable. Por otro lado, <strong><code>print()</code></strong> escribirá en consola texto que este almacenado previamente.</p>
+<div class="cell" data-outputid="e20f4510-ab04-4a9d-c55a-58540b2f2eee">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nombre <span class="op">=</span> <span class="bu">input</span>(<span class="st">'Hola. ¿Cómo te llamas?</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hola. ¿Cómo te llamas?
+isa</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="60638e1c-8181-444a-ae78-00ac764d8132">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"¿Cómo se llama?"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nombre <span class="op">=</span> <span class="bu">input</span>()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"¿Cual es su edad?"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>edad <span class="op">=</span> <span class="bu">input</span>()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Me alegro de conocerle, </span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Con </span><span class="sc">{</span>edad<span class="sc">}</span><span class="ss"> años"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>¿Cómo se llama?
+isa
+¿Cual es su edad?
+3
+Me alegro de conocerle, isa
+Con 3 años</code></pre>
+</div>
+</div>
+<p><strong>Nota:</strong> De forma predeterminada, la función input() siempre que lee algún dato, lo retorna como un string, incluso aunque sea un número válido y por ejemplo, si intentamos hacer operaciones, se producirá un error.</p>
+<div class="cell" data-outputid="8c855aa6-61e1-4d5d-cefd-2975ee2f4643">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cantidad <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Dígame una cantidad en pesetas: "</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>cantidad<span class="sc">}</span><span class="ss"> pesetas son </span><span class="sc">{</span><span class="bu">round</span>(cantidad <span class="op">/</span> <span class="fl">166.386</span>, <span class="dv">2</span>)<span class="sc">}</span><span class="ss"> euros"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dígame una cantidad en pesetas: jm</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>TypeError: ignored</code></pre>
+</div>
+</div>
+<p>Para evitar lo mencionado anteriormente, se debe convertir el dato a número (float o int) según lo que se requiera en el programa. Veamos entonces cómo leer y convertir los números de la entrada en Python.</p>
+<p><strong>Ejemplo:</strong> Si se quiere que Python interprete la entrada como un número entero, se debe utilizar la función int() de la siguiente manera:</p>
+<div class="cell" data-outputid="82a34ba4-fc85-483c-cb38-d44fc79cc5df">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cantidad <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Dígame una cantidad en pesetas: "</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>cantidad<span class="sc">}</span><span class="ss"> pesetas son </span><span class="sc">{</span><span class="bu">round</span>(cantidad <span class="op">/</span> <span class="fl">166.386</span>, <span class="dv">2</span>)<span class="sc">}</span><span class="ss"> euros"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dígame una cantidad en pesetas: 40
+40 pesetas son 0.24 euros</code></pre>
+</div>
+</div>
+<p><strong>Ejemplo:</strong> Modifique el código anterior de tal manera que Python interprete la entrada como un float e imprima el valor con un redondeo de 3 dígitos.</p>
+</section>
+<section id="tipos-de-dato-y-operadores" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-de-dato-y-operadores"><strong>3. Tipos de dato y operadores</strong></h2>
+<hr>
+<p>El tipo de un dato es un atributo que determina qué operaciones se pueden realizar y qué valores puede tomar. Estos pueden ser números, listas, texto, entre otros. En <em>Python</em>, los tipos de dato no son definidos explícitamente, pero siempre están presentes en las variables que declaramos y es necesario tenerlos en cuenta. En particular, el tipo de dato define las operaciones válidas entre datos del mismo tipo. Estas operaciones están definidas con el uso de símbolos llamados <strong>operadores</strong>.</p>
+<p>Para conocer el tipo de dato de una variable, se usa la función <strong><code>type</code></strong>.</p>
+<div class="cell" data-outputid="06be497d-db79-435d-80e3-668b39c542b6">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>num <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(num))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>Persona <span class="op">=</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'int'&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="cadenas-de-texto" class="level2">
+<h2 class="anchored" data-anchor-id="cadenas-de-texto">### <strong>3.1. Cadenas de texto</strong></h2>
+<p>Un tipo de dato muy importante es el de las cadenas de texto. Estas cadenas permiten almacenar en un mismo dato texto con cualquier cantidad de caracteres. Para definir una cadena de texto, se rodea el texto con comillas simples <code>'</code> o comillas dobles <code>"</code>.</p>
+<div class="cell" data-outputid="d02db458-1ea5-49d6-b744-39bc3ae7c30d">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">'cadena con comilla simple'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>'cadena con comilla simple'</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="4ca24737-ad7e-49ce-dbbc-3a1204ec2e6f">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">"cadena con comillas dobles"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>'cadena con comillas dobles'</code></pre>
+</div>
+</div>
+<p>Las cadenas se pueden almacenar en variables, así:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="st">' ¡Pontificia Universidad Javeriana Cali! '</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="0290104d-b06a-4065-f03f-80f4d8ffcf78">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> ¡Pontificia Universidad Javeriana Cali! </code></pre>
+</div>
+</div>
+<p>Algunos operadores de los usados para valores numéricos también sirven al operar con <em>strings</em> pero con utilidad distinta:</p>
+<ul>
+<li>Concatenación <code>+</code>.</li>
+<li>Repetición <code>*</code>.</li>
+<li>Formato <code>%</code>.</li>
+</ul>
+<section id="concatenación" class="level4">
+<h4 class="anchored" data-anchor-id="concatenación">Concatenación</h4>
+<div class="cell" data-outputid="ae20b4b2-ace3-45a0-d5e3-8fe368a04c3f">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="st">' ¡Pontificia Universidad Javeriana Cali! '</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">" Andres "</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">+</span> name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>' ¡Pontificia Universidad Javeriana Cali!  Andres '</code></pre>
+</div>
+</div>
+</section>
+<section id="repetición" class="level4">
+<h4 class="anchored" data-anchor-id="repetición">Repetición</h4>
+<div class="cell" data-outputid="c9d9b11b-1c86-49d7-8826-31195707c761">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>' Andres  Andres  Andres '</code></pre>
+</div>
+</div>
+</section>
+<section id="formato" class="level4">
+<h4 class="anchored" data-anchor-id="formato">Formato</h4>
+<p>Este operador permite reemplazar los marcadores de posición (%_) dentro de la string con la o las variables que se encuentren después del operador (%).</p>
+<div class="cell" data-outputid="0fc8b752-826f-4b82-86f9-262591e19ebe">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tipo_calculo <span class="op">=</span> <span class="st">"raíz cuadrada de dos"</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>valor <span class="op">=</span> <span class="dv">2</span><span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"el resultado de </span><span class="sc">%s</span><span class="st"> es </span><span class="sc">%f</span><span class="st">"</span> <span class="op">%</span> (tipo_calculo, valor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>el resultado de raíz cuadrada de dos es 1.414214</code></pre>
+</div>
+</div>
+<p>Las cadenas, como objetos que son, nos proporcionan métodos que nos facilitan su manipulación. Por ejemplo, siendo <strong><code>s</code></strong> una variable con un <strong><code>string</code></strong>:</p>
+<ul>
+<li><strong><code>s.lower()</code></strong> : Retorna la cadena con todos los caracteres alfabéticos en minúscula.</li>
+<li><strong><code>s.upper()</code></strong> : Retorna la cadena con todos los caracteres alfabéticos en mayúscula.</li>
+<li><strong><code>s.replace(a, b)</code></strong> : Reemplaza las subcadenas iguales a la cadena <strong><code>a</code></strong> con el valor de la cadena <strong><code>b</code></strong>.</li>
+<li><strong><code>s.strip()</code></strong> : Retorna la cadena con todos los espacios en blanco al principio y al final removidos.</li>
+<li><strong><code>s.islower()</code></strong> : Determina si la cadena está compuesta solo por caracteres en mayúscula.</li>
+<li><strong><code>s.isupper()</code></strong> : Determina si la cadena está compuesta solo por caracteres en mayúscula.</li>
+<li><strong><code>s.isdigit()</code></strong> : Determina si la cadena está compuesta solo por dígitos del 0 al 9.</li>
+<li><strong><code>s.isalpha()</code></strong> : Determina si la cadena está compuesta solo por caracteres alfabéticos.</li>
+</ul>
+<div class="cell" data-outputid="24ffe6c5-cf24-4a5a-ca0c-846389c98f09" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="st">' ¡Pontificia Universidad Javeriana Cali! '</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>c.lower()</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>c.upper()</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>c.replace(<span class="st">'a'</span>,<span class="st">'x'</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#c.strip()</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#c = c.upper()</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#print(c)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>' ¡Pontificix Universidxd Jxverixnx Cxli! '</code></pre>
+</div>
+</div>
+<p>Cada uno de los caracteres de una cadena (incluidos los espacios) tiene asignado un índice. Este indice nos permite seleccionar su carácter asociado haciendo referencia a él entre corchetes ([ ])</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAACWCAIAAABLpkprAAAXSUlEQVR4nO3deUBN+R4A8O+lXXtkKTQ01umGMvMYa4vqmWR9DWUbo+YxjMEzY2vGzqMoMhm8SMhYUswQU8TEpJR2UlS4VCp16+513h/lturc5dxz763v569zTuf+ft97T99zzu8svx+DIAhACLWri7IDQEgNYJ4gRA7zBCFymCcIkcM8QYgc5glC5DBPECKHeYIQOcwThMhhniBEDvMEIXKYJwiRwzxBiBzmCULkME8QIod5ghA5zBOEyGGeIEQO8wQhcpgnCJHTUHYAHYAoN/Fu+osyLS2tdlYSCAR9PnEYO8S0IwbQCRBIPs9j/ST8qR33JHTIADoDPO+SF6dC0o6deulodsgAOgOpz7uE7KJ7CY8qBR9cgRBA98F2n9tYtPnXN48fJGa+YbR3gtCNOX6slYmutIEpy8AxDrMM912s4nbaADoFKY8/FbucJDrBvZRd0/rD3IJLEsVkvK64jpKjJX24bRPWCUvFv5hX4IMOHEDHJuXxhBAxDBiSrFgtFLZeyCl7LVEtghwWmzA3lKgiFaGjo/Ohvxga0HFyq/QAOjYpf0GGsb2LJ+laPSevHGFp2Hq5yTDXjdPJD0fzflpho1ZJgjo8afc0Go6+wXVCIU9I8Mv+ctFv2IcdjH9DEMJ6XK7wTVygjWkb/+gMnQHbI8uE74kI4tXfwQ1/03NPLBbUl3x6nXNXeb4TQlST5f4JQ0NDG4DQ7abfpSEZdLvpAGhoaAAAaJAVqdFkDR09bfG0no4GQ4Oh3dZHEFIuqs5cRRSVg5AqwhYeQuQwTxAih3mCELmO9xykqLgw/3FOZk5ufuHz1+UcDgAA6JqZmVkNGjJo6OBPhg3qbvChWw2ISoSIXZiX8ygl+0n+U9bLtzyAOg6HB3o9+loM/cR29Cj7oUMs1OWyTcfJk0pWZlR46K9bghM4/PbXtPdY+d03C9yd7Iw6zrdXLW8e/3Um7OiaXWEk6+lODDi2ecFMBzMdVb9d1hHOuwhe0YmNs4wtbBb+EECaJACQHBU0383e2HBSaFw2DeF1KvzSR9sX2PUeOp48SQCAG7/ay6m7kW1gdFqt4mOTh9rvUV+nnJszfmGb6TFy8rThFr309IDDKUlPi0nPaP6kIDf+K8fhR32OXT70lbmmqu/P1ELGdX+m29rWy42ZkyYzLXvo6QFwiotZUVFxzf4syFjlMWKfx85bYT9aq+xzGDI/GVbHSZ1l2PBU77Hkt7IVUpZ+rCEOPfeMSqkffkw7v7n1N1q759SDnJc8YcuVOeWshGsnlnuYtFjfaMSKHOmrlhg7eEb3+oqU9BgiPQEIbwYtarkl9NyDz8cXlVS2WLVOyH2Rk3h068LW619/+k5hEcpFjfPkXuiyFr/zDyG/v+GSF1KUHrPMwajZJw2WpJQpKFU6Q55wz22Y0uz31LI5EJXEI/sYv/xxyPfOLTbiib/fKCZIuahr+6QgbtfYxYfFsz0d1j18xdnt+8+eErQI+9pMCY59cyd0TeMi9vFJTrtLJH3fCTVz79dlnjtviGctPXY+LU37bpo96bUsLZPBvgE38u4cHabd+ALZognONwo+/HqTklCVJ7S2c+oq7nm7bxHPWvuE5f65Z1QfqV7t0hm/aF/xwzDxFqpK3fDzyUeUhtkpsB+Hf+4bKp79cuvVx5fXS9XMGDj+69QXt7yN9BrmBRlzZvqr2j6Lmjzh1vAARNKqBeBJcHmqFdH5bavEDXeL6QEPQubL1vwzHzU/Lv6AePaXZauSylVs+6g44vU+rxXiuel7bpzdPLWb9MVo9fj85IsEcapUpW7YczaLohApIvMZW9P2CQUkbp9U5UQ0/VSq3E3whCOLxeV5UN/TQkdunzy71ngdxdwxoFy+TdFsy+rPleG6juKoXftE9HvgKvGMf/ThEXJfSRy7dMePoxqa9VHbDmVW4SFFMsSLEO/Go/HxEF8T+TaFwRDPmG0uDTPVZw9fSpOrOEqpWZ4Q3MwLZyrrpw1H7lzsYElBoYzeqw6/79qn+uyNpFcUlNkJlGfe/m8Zu3563PdX3az12l9fEk7Lt4lf/jsddFl1WinUtL+/3n1qlq2hQMqrFAwtrYr0iIU/nJT8IxU5D8Udi3y9dpqcOzCxnqNmLDXxO1pRAwBX7+WsdqQi/Tq6J/euiKd/XEnNK6hdTEav8ZsYsy4GAKqyLqWxNjhbtNc3D22oyZMJbjNdmbLsTrhWb6XKk/zkmIYp3YmzXYfJUGPbND+avXrc0c0xAPAwMrlkk7O5qt4XVhnVqTG36qcMR+4c25+y/2Y71zmwLgYAQJARf7/AefYgqkqWBzV5IhByAWTKE6G017v0338yfufe/46n6IDC0IHYPfH101VP7qtdby/0I7iF9+Pqn8WGyV+OoerADgDGVnYu+jox1TwAyGZVUlaufNTs+S4Ony2evrr7x6uKqUXNfhTlEJbW1tVP9TIyprDcLgZWLs76MZE8kG3Xqxjq1Y6vfpp8h4Zq8GV/SYh7ERlr/xG1JXOLGrYAA9roBU4p1GvXqW/7+VQIa7j7a2Jj05dB/dlRYRcrA+yGVxqq8r+sSOqVJ03oz72feHqwLrYilKa6ruGqbVLy8yV2IygsWbefBjwEACBAVfZY6nXeBY0deFefTSvAnqeVSLNH14Z/ntcl7ygst45dEHOzun6aQ2G58lGzPBn8Dwfx9O3E50qMpJNj6PYf49DQzL4deVvioSXIvXv6sP5iFwAM72/U/sq0UbM8MRj4qfhpuYvhN/ARE+XRH+06uX6qKnXLvULKnoRP/uN8w5SWzQR7K6qKlZOa5QloDpixZHj9ZEns6lOJxcoNpzMbMsZdPL076CYlL7jXVdwLeH8jy3D4TNs+KnEzHtQvT0DDeWnj+1Xfuu4oEuIxRTkMPnESPz/61/4vruRR0Jq4HrxVfNLltXK66jwVoXZ5AgZDPMJ8ezbMVB5csftPpYbTiTF6++xYKZ7z9Q2Us5XCzjg1dfP755L0537naStXcZRSvzwB0Jnrd0r8HmK035Tt0bmUlEvw3manZLyowMtokvrIZaXfqIab8SVxGxZtl/3sq479aPE4X/Hs6iMbVeqivzrmCWj0cT59xEc8u9lj8PYoeXviKkqMGG9mOdyO2c/SE19BkRSj+9rTIeK5aL8pM7dF1khfDJ+VsLDv5+InwQ1H7tw0dzhFIVJDLfMEAEYs3H10gbl4dvP04VO//98rriz/35zSzIPfT+n/j7kN7xJzriQ+raIqzg7PYIhnUmjjC6HRfjOHTN+VJ80ZWP7dY6MGTA6vfN+80bKJurKGwgcrKSF7nhBCofiOLCHzowtNnheW8qkq/a9PZB2Y30M8/8eBJZbGtoHRyRLvz3gvH/91aMOsbuY2Kw/cbFxstMKZ2cagebISib8hRzlPeCg8APtFhy+L30MEeBm14eNetoHRyaSPggsqnhxZPcV6wtJsfmNgZ+/fmqQa75w0I/krwqLy1I3TR0pS5mfeu562+XKzoDDQ10mSEkY6rEwpFkgQFLtlz1EAoDvRLyQys6C4dVd3Ai63+FX+vdgL/ut9m/aFI2blHVBQJdFr2ey8mIUjFdLQdPE5XCwgj0HpATQnjA9Z3LIg6fu5i3vexjDRqkCKPHl5x1/y3/rQ/TZ6vit7GEz+yffmh0ja6UFa1L4PFeI4zcPHx8fHx9vDw2OCLbO9+rRsDkQ9Ekn8ayQEuUr+XaR1LJm8W0SlB9BaTuyhNkszZk6a4e3t4+Pj4+Pj4eHQ5jpW3gGFHBXqOKIFKfKkse9GCYSltfFDc/IkGz8eAAA2/5EveWy8koy9kh2p2qDnHnD6z7cSdCTZVOqJVrtP6lx9zlf9ACjbELoTj1/Lkq062jAIQvImFy/r7s2k/LL2VyL40HPEOJfPrNt8YfpZSkx80mvS0UqN+o36pwNT2sExKlmZ1y5E/HJ8/5108nteIyd7zfP0cHOdOKS/uUzvdr9Lun4t9Q2f2lNpgg99Rzs7jbJQhwA+6G3+g9/OhAbvON604dGaMdN9x+a1XtMnqP4AG1LliboQlbOKnuU/fZyd+7zkdXl5w9VGXV3TXr0sLaz6DRxkZWXR39hA5TeOmiNEPFZhXnpWRu7jvDevy9+PE6Tb3bLP4KE2dqPtZN1DKUGHzBOEKKau908QohPmCULkME8QIod5ghA5zBOEyGGeIEQO8wQhcpgnCJHDPEGIHOYJQuQwTxAih3mCEDnME4TIYZ4gRA7zBCFymCcIkcM8QYgc5glC5DBPECKHeYIQOUX3OSIqLix8JwJDwz69e+gquK72CHkiTR2ldbBCiNisVyU8Eegp73d4H4OQoWs+oI+pUmJQY4rrGqy26skGRxNxRV+sj2izL1WFqizJv3H+yArvkaDnnkF/9QRBEERa1L6mfbT+a/2pcroD4d49vaNpDD0d1qWXSNItrUI8u7YTAMBgyWMV7gCyBYXlSV3pLidTAAiNz62qYl0PWQbSdIVKBW7jcEIAysqT3GubAWCMz/7UvOLy8lexoZsAwNonjEdjDFnnlwPAv9YfT817WVVVnnnnpIu+DhiveyV1J8JUEDxpGGFTeXsuGSgqT978HQwA/n++EC+J2eYC+nMz6duFCDNiL1y8lvyWW1eVcwp0Jyphq9QVrTTVt/aJaJoVz2P94QP9yipISXrMyQuPmi7h5J0DgGPJbfQBrWgJQXNAz/3C5SDlbBFZKSpPYrZ9BiY/NT3BEL66AQAH498oqMZ2lKUfU85WEbIOLJgf07yv3jpO6jBtzUvZ9OVJa7Vlt5WSJ6LiG8O0NReGZrLzlLTnkpWCrndVZ1zOdf5pStPRXjT6jPF3Mo1OLVJMjSpJo/d3J8OmWDXrAZhf8iqbL2RVSjncC6Uy42IBoJeZAb3V8s74zc/W+WbbwmEEh3RwFNWiqEtADBMGQBsDjOir2DhJdBM+3zLTC4xWuNvRf8VJlHgx9MFb7ou/Tu4NT/E+cMPJitbheMpTTi84Uuz/57q+DEY5nRVTQVF5wquomz5ugIIKV1fCoi1udrsz+13J2t1Pk/4dBu9pwvmV+xtGDhszbpS0wwHIhXi9d+kac8fgrx0s6ayWKoq6z6gNjOcvKxVUuDoieM82uo34ObYiIunWF9Z6yghB3zvgBkEQbwtStnl3X27f/VI6fRso+2LA7sx+p459Y8gAANDV1AaGoZYy76hJR4HnXWkFZQDNDilaDEZ1p+wdv46dtXzi2JDUqotpb2cyzZQbjFn/kZvCUmqybfwiHsxkOtNQI8HN3fX1YYCBNfm3o9OrGVpaxUmXgXPlbHi01/R/Wpu0cX6uahSVJ1oMBqv4XbNFRGl6Mo/pY6SgGlVWbWnSoo8nhXMHXsq+O2Ooanx9Rl/PFS6HgzKqdjgb0nICqD9AA1IzZjo5Nl3481fTP2K+s7ZTjd+kXQo679Ifv8gjK/Bg04HYy1PjjlbUfDpcLU9PZcZn3Z46YEK4YPT1rL9VJUkAAERP0u/qmOp0pSVJGLqDfklpNppp2cNg0J2YWlm3QB2SBBTXPvnEecGw2usbA/+oBQAAgpu7xXkVmPw0aYgSTs3rj+sM2g/vgpJ4x49dYxheKQW3XBrbJKLfNv07MoemtgHBzZpv5hAal13buEyUfGb9l/tf+65x7UZPEK1oamoDgKYanHC9p7hbMwlHFgOApccPJ8KPzDLUBYCzD+m8scU+5mtvYmPDZL4f5lfLZoItc5i25vrTmfREIB7f2MPDgdkEfGA8ZIWoY+2eYQYAoOe+PfCX0NCgxZMNAWDcqohqmiJopjwnonHgZS2bCBqfS5CHQsedE6VeDw0OiUitLOtu6brp5w3jBxoqrK42an8QffpROdHiHgHB5/cdO8PJxpyGCPispDNXsrS0ocVgnnw+jHH3ZPah7XKP6FlK7OULkVF/POlqWtHFcKLvmm/njP+Yrtqb4bOSQi+k6BhqAwCfD6PdPUfR9zvIDsdnRIgcvqeFEDnME4TIYZ4gRA7zBCFymCcIkcM8QYgc5glC5DBPECKHeYIQOcwThMhhniBEDvMEIXKYJwiRwzxBiBzmCULkME8QIod5ghA5zBOEyGGeIEROaUOxdWZVFazSci4AGFsMMNNRTs/kVaWs0iougK7lwD60djSsnmg6njw6+S2jleMPy+ipvSXixUYnUwaDsezEI5prrmEl+c23MzK1sLa2tra27q7bZeuZ5Fryz1Gpjp21fYGdkXl9DBY63aZdTCmmNwQgROynKbcOb1s9XEdrwZEkmmuXAU3HE0FViZV3wP98bPk1gvolhAA+HkBnN0WN0s7u2RlbAQDVfCHpylQS5i4cOvGiyCk89leHkYO0uayLhzb4eI3uapK/0Y2uvv2FRes/GvNfttXhqKQ54wfyitP2L58x267Xpex3tHVXyX58znDol+JZO3pqlRM93YQlBLk6B6bQU1f7aisfuOjrzNt97sD8HjMC6RwvkiCErLNBIellTQeREp5c0NNwpD9tXc49u7YZACKf1jQuqiv62dHEYvox2mLglaSGhv6WmldMEOyDzmZ0bwWZ0Nc+qeXRu/P+gOtB38bAjLyVbrEedXTXrdH7yxW+LRYZMRgEQ7uWAKClncITwNT1V92bDizB6Os8bbD/SR5tMWj3GLFo0QgAAKgWqEn3cTTliQbAWz6nvPTZk4zc0mqBYc+Px3w2lP7mY3X+uambH6w5f2qgrmaUCmyhOnbW7XROz097d6OrMT902tar01osE70oKGQQajYQHM1oyhOGtkG632Qzv8YlRiNW3I0NtDGl82rPu6P/+RZMflo3axBANY31tsQvfRR69g6fV/yr395szdl3I127Ki+Y3Ct7v9z/etPlL+gZ4EFNyZUngoqs8FOxQu02DgwCRj/vpW7icUy7mQ2Z5bNr9ffz7awttDVERYkX5jksclsy5EnkMjm7TJc8hpdxv6yOfHsseYU51f8QksfQsLDsSfj6dQn1Y3nq2zP7UdCHv7Qx1CuICxg8bcO4VZc2eQxSVgzqQZ7GTdnDgA+Wq2WT2u6ox2/u+APA1ec17axDZQyCJ0tNuo1bden954QHnc1mhaTKWbt0MTRXJ6xIjNoHANY+YfK3oWWIIefazvraqRqeWvoY2P5Oph2/HW866t/FrzxrNTVblEIIhbWaBr3bPZCb27u46G8sLOOClVx7UwljSDsfdLSixtakOvZ6dI0AtDQrrt6vydK7/McIfZfPrOU87ZHtd2BoGH86bU3uNcEgtwVJfp6TLOQafVfaGB5e+I/9nH3WPmEPQ+ZTdcYlz/+DqlNWgtZxMl30dYKTaRoGJOv82ja/vsX0YKUMA9JIkOmir0PfcCgEQRBE/JFloLwhUJpQm+MJHffjheyKalHLhSXp8THVPGszAxoCAIBhs/c2/+LsfXYmzgcevJS7gSQnHqsgpppnqEfbBXrRzb1zJvoenrb10p/7PZX73dUIHXmS8Iutgcm82Mfl4iV8VsLyKWvNHQP+0V+ukw05aDBob1Qmn1w+1vdwXkXjfaTaikffz5gHxuscbei5Fy66ufeLKesufBeSELV5hri5zSuMXLT6nDIuDGsAgHoMAU3DMau64Ja3kR4AfOb9w5HQ08FbvwEA0HOPk7sRLxP2qdUzmTYNYziN8aWgDS2hgjuH6iud5bPlSGjo/vrfQcvmSjZtY69V+DuZAkBf92kTbBvHwRumrQlm/lS15klV5UQM09ZkMpnirTBqki2TyTQaseIxh64gpETbeFrvHkRHhZ+/HJ/+DMB0iteSb//t1d9AKQ07XuLFc2ns+vHo+F0M7Lxm2dN2+0JQ8ezmtd8jf7v8rIooKyOmeC1ZvtTLir4jGy/h4rk8viYhEDRfzu9qajdvGk2/A7/00ZlLiYxWl48F0HO2t5upSj7CjuPOIUQO39NCiBzmCULkME8QIod5ghA5zBOEyGGeIEQO8wQhcpgnCJHDPEGIHOYJQuT+D6VwIQjwoirtAAAAAElFTkSuQmCC.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image.png</figcaption><p></p>
+</figure>
+</div>
+<div class="cell" data-outputid="5b7768a7-b425-46c4-8a43-5db69fde5931">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="st">'¡Pontificia Universidad Javeriana Cali!'</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>c[:<span class="dv">3</span>]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>c[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>'!'</code></pre>
+</div>
+</div>
+</section>
+<section id="valores-y-operadores-numéricos" class="level3">
+<h3 class="anchored" data-anchor-id="valores-y-operadores-numéricos"><strong>3.2. Valores y operadores numéricos</strong></h3>
+<hr>
+<p>En <em>Python</em>, los valores numéricos pueden ser de tres formas:</p>
+<ul>
+<li>Números enteros. <strong>(int)</strong></li>
+<li>Números decimales. <strong>(float)</strong></li>
+<li>Números complejos. <strong>(complex)</strong></li>
+</ul>
+<div class="cell" data-outputid="49f958ff-1362-43e0-eb8b-1ad1febbee5c">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">10</span>            <span class="co">#int</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(a))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>10
+&lt;class 'int'&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="cabd003d-9ba4-484d-baf2-a2b6bddb79b3">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="op">-</span><span class="dv">1089</span>         <span class="co">#int - Se pueden escribir números negativos con el símbolo ‘-’</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(a))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-1089
+&lt;class 'int'&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="9cc78428-c7e4-4174-9068-4764843e8c23">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">1e100</span>         <span class="co">#float - Esta sintaxis representa notación científica.</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(a))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1e+100
+&lt;class 'float'&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="4f57342c-327d-40e5-e1a5-af60ff28939c">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="ot">0.2j</span>      <span class="co">#complex</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(a))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(1+0.2j)
+&lt;class 'complex'&gt;</code></pre>
+</div>
+</div>
+<p>Como obtener la parte real e imaginaria de un numero complejo:</p>
+<div class="cell" data-outputid="42062eb3-7396-4171-e242-5a9090b86ada">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">2.0</span><span class="op">+</span><span class="ot">8.0j</span>).real</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2.0</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="ff559b0d-b7f3-455d-fab6-21077fd61520">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">4.0</span><span class="op">+</span><span class="ot">5.3j</span>).imag</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>5.3</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="544e8512-1fb1-43c0-ff4c-ea34e46fc9f2">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">2.0</span><span class="op">+</span><span class="ot">8.0j</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="fl">4.0</span><span class="op">+</span><span class="ot">5.3j</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>(a<span class="op">+</span>b).imag</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>13.3</code></pre>
+</div>
+</div>
+<p>Existen varios operadores matemáticos para estos valores numéricos. Estos son:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Simbolos</th>
+<th>Operaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>+</td>
+<td>Suma</td>
+</tr>
+<tr class="even">
+<td>*</td>
+<td>Multiplicación</td>
+</tr>
+<tr class="odd">
+<td>/</td>
+<td>División de numeros flotantes</td>
+</tr>
+<tr class="even">
+<td>//</td>
+<td>División de números enteros</td>
+</tr>
+<tr class="odd">
+<td>%</td>
+<td>Módulo</td>
+</tr>
+<tr class="even">
+<td>**</td>
+<td>Exponencial</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-outputid="e1dc79fd-d610-4e51-b895-3012f9533572">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>9</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="5edf695e-9b60-456b-d970-15fc46145668">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span><span class="op">%</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="operados-logicos" class="level2">
+<h2 class="anchored" data-anchor-id="operados-logicos">Operados logicos</h2>
+<p>Otro tipo de dato importante es el <strong>booleano</strong>, que representa un valor lógico de verdad. Puede tomar únicamente estos dos valores:</p>
+<ul>
+<li>Verdadero: <code>True</code></li>
+<li>Falso: <code>False</code></li>
+</ul>
+<p>En <em>Python</em>, a diferencia de otros lenguajes de programación, las primitivas lógicas son escritas con la primera letra en mayúscula.</p>
+<p>Además de con el uso de las dos primitivas lógicas (<strong><code>True</code></strong> y <strong><code>False</code></strong>), se pueden obtener valores lógicos con la evaluación de expresiones con <strong>operadores relacionales</strong>. Los cuales se encuentran a continuación:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Simbolos</th>
+<th>Operaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>==</td>
+<td>Igual</td>
+</tr>
+<tr class="even">
+<td>!=</td>
+<td>Diferente</td>
+</tr>
+<tr class="odd">
+<td>&lt;</td>
+<td>Menor que</td>
+</tr>
+<tr class="even">
+<td>&lt;=</td>
+<td>Menor igual que</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(&gt;\)</span></td>
+<td>Mayor que</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(&gt;=\)</span></td>
+<td>Mayor e igual que</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-outputid="996e9ee7-28ea-41c2-f17f-5fbee531792e">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="op">-</span><span class="dv">10</span>  <span class="op">&gt;</span>   <span class="fl">4.0</span>)  <span class="co"># Mayor que.   </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>False</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="2322a11e-0537-4e41-faa8-3f1004772729">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="op">-</span><span class="dv">10</span>  <span class="op">!=</span>  <span class="fl">4.0</span>)  <span class="co"># Distinto que.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="ac6dd5ed-6b4e-4e67-b1fc-22b2d2bb79ab">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="st">'Michele'</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="st">'Santi'</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">&lt;</span> b</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">!=</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="54">
+<pre><code>True</code></pre>
+</div>
+</div>
+<p>¿Puedo utilizar los operadores lógicos con string?</p>
+<p>Para evaluar más de una condición simultáneamente, se utilizan operadores lógicos. Estos son:</p>
+<ul>
+<li>AND lógico. <strong><code>and</code></strong></li>
+<li>OR lógico. <strong><code>or</code></strong></li>
+<li>NOT. negación. <strong><code>not</code></strong></li>
+</ul>
+<p><strong>Ejemplo</strong></p>
+<div class="cell" data-outputid="69b707da-21ff-4a1b-cf00-9be4789ddfb7">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="va">False</span> </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a <span class="kw">or</span> b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True</code></pre>
+</div>
+</div>
+<p>Además de estos operadores, se puede usar el operador <strong><code>is</code></strong>, que valida la identidad de un objeto. Para entender esto, tenemos que por su parte el operador <strong><code>==</code></strong> valida la igualdad de contenido de un objeto, mientras que el operador <strong><code>is</code></strong> valida si dos objetos, además de ser iguales en contenido, contienen la misma referencia en memoria, es decir, valida si son el mismo objeto. Si los valores son primitivas numéricas o lógicas el operador <strong><code>is</code></strong> retornará <strong><code>True</code></strong>.</p>
+<div class="cell" data-outputid="6b02804e-7988-4b97-f860-8beb1b904913">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Operador is</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Operador is'</span>)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a <span class="kw">is</span> b) <span class="co"># No tienen el mismo tipo de dato y por lo tanto son objetos distintos.</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a <span class="op">==</span> b) <span class="co"># Contienen el mismo valor al verificar su igualdad.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Operador is
+False
+True</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

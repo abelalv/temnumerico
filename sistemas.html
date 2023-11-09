@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>clases - Solución de sistemas de ecuaciones lineales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Solución de sistemas de ecuaciones lineales</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">clases</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Cálculo numérico</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">Introducción</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Intalacion.html" class="sidebar-item-text sidebar-link">Instalación Phyton</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_1.html" class="sidebar-item-text sidebar-link">Introducción a Python - Parte 1</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_2.html" class="sidebar-item-text sidebar-link">Introducción a Python - Parte 2</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_3.html" class="sidebar-item-text sidebar-link">Introducción a Python - Parte 3</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_4.html" class="sidebar-item-text sidebar-link"><strong>Introducción a Python - Parte 4</strong></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_Parte_5.html" class="sidebar-item-text sidebar-link"><strong>Introducción a Python - Parte 5</strong></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Python_numpy.html" class="sidebar-item-text sidebar-link">Errores</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Raices</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./biseccion.html" class="sidebar-item-text sidebar-link">Método de la bisección</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./newton.html" class="sidebar-item-text sidebar-link">Newton Rapshon</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./punto_fijo.html" class="sidebar-item-text sidebar-link">Método del punto fijo</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Talleres</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller.html" class="sidebar-item-text sidebar-link">Método de la bisección</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./taller_resumen_1.html" class="sidebar-item-text sidebar-link">Taller Resumen</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Sistemas de Ecuaciones</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normas.html" class="sidebar-item-text sidebar-link">Normas</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sistemas.html" class="sidebar-item-text sidebar-link active">Solución de sistemas de ecuaciones lineales</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cholesky.html" class="sidebar-item-text sidebar-link">Cholesky</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Gauss-seidel.html" class="sidebar-item-text sidebar-link">Gauss-Seidel</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#solución-de-sistemas-de-ecuaciones-lineales" id="toc-solución-de-sistemas-de-ecuaciones-lineales" class="nav-link active" data-scroll-target="#solución-de-sistemas-de-ecuaciones-lineales">Solución de sistemas de ecuaciones lineales</a>
+  <ul class="collapse">
+  <li><a href="#sistemas-de-ecuaciones-lineales-con-matrices-triangulares" id="toc-sistemas-de-ecuaciones-lineales-con-matrices-triangulares" class="nav-link" data-scroll-target="#sistemas-de-ecuaciones-lineales-con-matrices-triangulares">Sistemas de ecuaciones lineales con matrices triangulares</a></li>
+  </ul></li>
+  <li><a href="#factorización-lu" id="toc-factorización-lu" class="nav-link" data-scroll-target="#factorización-lu">Factorización LU</a>
+  <ul class="collapse">
+  <li><a href="#algoritmo-de-factorización-lu" id="toc-algoritmo-de-factorización-lu" class="nav-link" data-scroll-target="#algoritmo-de-factorización-lu">Algoritmo de factorización LU</a></li>
+  <li><a href="#pivotación-parcial" id="toc-pivotación-parcial" class="nav-link" data-scroll-target="#pivotación-parcial">Pivotación parcial</a></li>
+  <li><a href="#algortimo-lu-con-pivotación-parcial" id="toc-algortimo-lu-con-pivotación-parcial" class="nav-link" data-scroll-target="#algortimo-lu-con-pivotación-parcial">algortimo LU con pivotación parcial</a>
+  <ul class="collapse">
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
+  </ul></li>
+  <li><a href="#número-de-condición-de-una-matriz" id="toc-número-de-condición-de-una-matriz" class="nav-link" data-scroll-target="#número-de-condición-de-una-matriz">Número de condición de una matriz</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Solución de sistemas de ecuaciones lineales</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="solución-de-sistemas-de-ecuaciones-lineales" class="level1">
+<h1>Solución de sistemas de ecuaciones lineales</h1>
+<p>Solucionar un sistema de ecuaciones lineales es encontrar el valor de las variables que satisfacen todas las ecuaciones del sistema. En este capítulo se estudiarán los métodos de solución de sistemas de ecuaciones lineales.</p>
+<p>Sea <span class="math inline">\(A\)</span> una matriz de <span class="math inline">\(n \times n\)</span> y <span class="math inline">\(b\)</span> un vector de <span class="math inline">\(n \times 1\)</span>. El sistema de ecuaciones lineales <span class="math inline">\(Ax = b\)</span> se puede escribir como:</p>
+<p><span class="math display">\[\begin{bmatrix}a_{1,1}&amp;a_{1,2}\dots&amp;a_{1,n}\\
+a_{2,1}&amp;a_{2,2}\dots&amp;a_{2,n}\\
+\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
+a_{n,1}&amp;a_{n,2}\dots&amp;a_{n,n}\\
+\end{bmatrix}\begin{bmatrix}x_1\\x_2\\\vdots\\x_n\end{bmatrix}=\begin{bmatrix}b_1\\b_2\\\vdots\\b_n\end{bmatrix}\]</span></p>
+<p>Definiremos <span class="math inline">\(A_{\cdot,j}\)</span> como la columna <span class="math inline">\(j\)</span> de la matriz <span class="math inline">\(A\)</span> y <span class="math inline">\(A_{i,\cdot}\)</span> como la fila <span class="math inline">\(i\)</span> de la matriz <span class="math inline">\(A\)</span>.</p>
+<section id="sistemas-de-ecuaciones-lineales-con-matrices-triangulares" class="level2">
+<h2 class="anchored" data-anchor-id="sistemas-de-ecuaciones-lineales-con-matrices-triangulares">Sistemas de ecuaciones lineales con matrices triangulares</h2>
+<p>Sea <span class="math inline">\(A\)</span> una matriz triangular superior de <span class="math inline">\(n \times n\)</span> y <span class="math inline">\(b\)</span> un vector de <span class="math inline">\(n \times 1\)</span>. El sistema de ecuaciones lineales <span class="math inline">\(Ax = b\)</span> se puede escribir como:</p>
+<p><span class="math display">\[\begin{bmatrix}a_{1,1}&amp;a_{1,2}\dots&amp;a_{1,n}\\
+0&amp;a_{2,2}\dots&amp;a_{2,n}\\
+\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
+0&amp;0\dots&amp;a_{n,n}\\
+\end{bmatrix}\begin{bmatrix}x_1\\x_2\\\vdots\\x_n\end{bmatrix}=\begin{bmatrix}b_1\\b_2\\\vdots\\b_n\end{bmatrix}\]</span></p>
+<p>El sistema de ecuaciones lineales se puede resolver por sustitución hacia atrás. El algoritmo para resolver el sistema de ecuaciones lineales es:</p>
+<ol type="1">
+<li>Inicializar <span class="math inline">\(x_n = \frac{b_n}{a_{n,n}}\)</span>.</li>
+<li>Para <span class="math inline">\(i = n-1, n-2, \dots, 1\)</span>:
+<ul>
+<li>Calcular <span class="math inline">\(x_i = \frac{b_i - \sum_{j=i+1}^n a_{i,j}x_j}{a_{i,i}}\)</span>.</li>
+</ul></li>
+</ol>
+<p>Sea <span class="math inline">\(A\)</span> una matriz triangular inferior de <span class="math inline">\(n \times n\)</span> y <span class="math inline">\(b\)</span> un vector de <span class="math inline">\(n \times 1\)</span>. El sistema de ecuaciones lineales <span class="math inline">\(Ax = b\)</span> se puede escribir como:</p>
+<p><span class="math display">\[\begin{bmatrix}a_{1,1}&amp;0\dots&amp;0\\
+a_{2,1}&amp;a_{2,2}\dots&amp;0\\
+\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
+a_{n,1}&amp;a_{n,2}\dots&amp;a_{n,n}\\
+\end{bmatrix}\begin{bmatrix}x_1\\x_2\\\vdots\\x_n\end{bmatrix}=\begin{bmatrix}b_1\\b_2\\\vdots\\b_n\end{bmatrix}\]</span></p>
+<p>El sistema de ecuaciones lineales se puede resolver por sustitución hacia adelante. El algoritmo para resolver el sistema de ecuaciones lineales es:</p>
+<ol type="1">
+<li>Inicializar <span class="math inline">\(x_1 = \frac{b_1}{a_{1,1}}\)</span>.</li>
+<li>Para <span class="math inline">\(i = 2, 3, \dots, n\)</span>:
+<ul>
+<li>Calcular <span class="math inline">\(x_i = \frac{b_i - \sum_{j=1}^{i-1} a_{i,j}x_j}{a_{i,i}}\)</span>.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="factorización-lu" class="level1">
+<h1>Factorización LU</h1>
+<p>La factorización LU es una forma de factorizar una matriz <span class="math inline">\(A\)</span> en el producto de dos matrices <span class="math inline">\(L\)</span> y <span class="math inline">\(U\)</span>, donde la matriz <span class="math inline">\(L\)</span> es una matriz triangular inferior y la matriz <span class="math inline">\(U\)</span> es una matriz triangular superior. La factorización LU se puede utilizar para resolver sistemas de ecuaciones lineales.</p>
+<p><strong>Teorema</strong> Una matriz <span class="math inline">\(A\)</span> cuadrada tiene factorización LU única si y solo si todos los menores principales de <span class="math inline">\(A\)</span> son diferentes de cero.</p>
+<p>Supongamos que queremos resolver el sistema de ecuaciones <span class="math display">\[Ax = b\]</span> Sea <span class="math inline">\(A=LU\)</span>, así podemos escribir el sistema de ecuaciones como <span class="math display">\[LUx = b\]</span> Definamos <span class="math inline">\(y = Ux\)</span>, así podemos escribir el sistema de ecuaciones como <span class="math display">\[Ly = b\]</span> Así resolver el sistema original se convierte en solucionar dos sistemas triangulares, lo cual computacionalemente es más eficiente.</p>
+<section id="algoritmo-de-factorización-lu" class="level2">
+<h2 class="anchored" data-anchor-id="algoritmo-de-factorización-lu">Algoritmo de factorización LU</h2>
+<p>El algoritmo de factorización LU es el siguiente:</p>
+<ol type="1">
+<li>Inicializar <span class="math inline">\(L = I\)</span> y <span class="math inline">\(U = A\)</span>.</li>
+<li>Para <span class="math inline">\(i = 1, 2, \dots, n-1\)</span>:
+<ul>
+<li>Para <span class="math inline">\(j = i+1, i+2, \dots, n\)</span>:
+<ul>
+<li>Calcular <span class="math inline">\(L_{j,i} = \frac{U_{j,i}}{U_{i,i}}\)</span>.</li>
+<li>Para <span class="math inline">\(k = i, i+1, \dots, n\)</span>:
+<ul>
+<li>Calcular <span class="math inline">\(U_{j,k} = U_{j,k} - L_{j,i}U_{i,k}\)</span>.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol>
+<p>Ejemplo en pyrhon</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">## algortimo LU</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> LU(A):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> A.shape[<span class="dv">0</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> np.eye(n)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> A.copy()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i<span class="op">+</span><span class="dv">1</span>, n):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            L[j,i] <span class="op">=</span> U[j,i]<span class="op">/</span>U[i,i]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(i, n):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                U[j,k] <span class="op">=</span> U[j,k] <span class="op">-</span> L[j,i]<span class="op">*</span>U[i,k]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> L, U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Note</strong> De forma vectorial podemos escribir el algoritmo de la siguiente forma:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">## algortimo LU</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> LU(A):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> A.shape[<span class="dv">0</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> np.eye(n)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> A.copy()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        L[i<span class="op">+</span><span class="dv">1</span>:, i] <span class="op">=</span> U[i<span class="op">+</span><span class="dv">1</span>:, i] <span class="op">/</span> U[i, i]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        U[i<span class="op">+</span><span class="dv">1</span>:, i:] <span class="op">-=</span> np.outer(L[i<span class="op">+</span><span class="dv">1</span>:, i], U[i, i:])</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> L, U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pivotación-parcial" class="level2">
+<h2 class="anchored" data-anchor-id="pivotación-parcial">Pivotación parcial</h2>
+<p>La pivotación parcial es un método para evitar que el algoritmo de factorización LU falle. La pivotación parcial consiste en intercambiar filas de la matriz <span class="math inline">\(A\)</span> de tal forma que el elemento de la diagonal que se está utilizando para calcular los multiplicadores de la columna sea el mayor posible.</p>
+<p>El algoritmo de factorización LU con pivotación parcial es el siguiente:</p>
+<ol type="1">
+<li>Inicializar <span class="math inline">\(L = I\)</span> y <span class="math inline">\(U = A\)</span>.</li>
+<li>Para <span class="math inline">\(i = 1, 2, \dots, n-1\)</span>:
+<ul>
+<li>Encontrar <span class="math inline">\(j\)</span> tal que <span class="math inline">\(|U_{j,i}| = \max_{k=i, i+1, \dots, n} |U_{k,i}|\)</span>.</li>
+<li>Intercambiar las filas <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span> de <span class="math inline">\(U\)</span> y <span class="math inline">\(L\)</span>.</li>
+<li>Para <span class="math inline">\(j = i+1, i+2, \dots, n\)</span>:
+<ul>
+<li>Calcular <span class="math inline">\(L_{j,i} = \frac{U_{j,i}}{U_{i,i}}\)</span>.</li>
+<li>Para <span class="math inline">\(k = i, i+1, \dots, n\)</span>:
+<ul>
+<li>Calcular <span class="math inline">\(U_{j,k} = U_{j,k} - L_{j,i}U_{i,k}\)</span>.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+<section id="algortimo-lu-con-pivotación-parcial" class="level2">
+<h2 class="anchored" data-anchor-id="algortimo-lu-con-pivotación-parcial">algortimo LU con pivotación parcial</h2>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> LU_partial_pivot(A):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> A.shape[<span class="dv">0</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> np.eye(n)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> A.copy()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> np.eye(n)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        pivot_row <span class="op">=</span> np.argmax(np.<span class="bu">abs</span>(U[i:, i])) <span class="op">+</span> i</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pivot_row <span class="op">!=</span> i:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            U[[i, pivot_row]] <span class="op">=</span> U[[pivot_row, i]]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            P[[i, pivot_row]] <span class="op">=</span> P[[pivot_row, i]]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                L[[i, pivot_row], :i] <span class="op">=</span> L[[pivot_row, i], :i]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        L[i<span class="op">+</span><span class="dv">1</span>:, i] <span class="op">=</span> U[i<span class="op">+</span><span class="dv">1</span>:, i] <span class="op">/</span> U[i, i]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        U[i<span class="op">+</span><span class="dv">1</span>:, i:] <span class="op">-=</span> np.outer(L[i<span class="op">+</span><span class="dv">1</span>:, i], U[i, i:])</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> P, L, U</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ventajas del pivoteo parcial:</p>
+<ol type="1">
+<li><p><strong>Estabilidad numérica</strong> Ayuda a prevenir errores de redondeo y la propagación de errores en el cálculo numérico.</p></li>
+<li><p><strong>Prevención de divisiones por cero</strong></p></li>
+<li><p><strong>Mayor robustez</strong></p></li>
+<li><p><strong>Eficiencia en sistemas grandes</strong> Aunque el pivoteo parcial puede aumentar la cantidad de operaciones realizadas en comparación con el pivoteo simple (sin pivoteo), en sistemas grandes, los beneficios en términos de estabilidad numérica superan con creces el costo adicional computacional.</p></li>
+</ol>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
+<ol type="1">
+<li><p>Encuentre la factorización LU a mano de <span class="math display">\[A=\left(\begin{array}{ccc}
+  1&amp;-3&amp;0\\
+-1&amp;0&amp;-9\\
+4&amp;6&amp;0
+\end{array}\right),
+\]</span></p></li>
+<li><p>La siguiente matriz no tiene inversa, por tanto no tiene factorizacion LU única, encuentre dos factorizaciones diferentes de la matriz <span class="math display">\[A=\left(\begin{array}{ccc}
+1&amp;-3&amp;0\\
+  -2&amp;0&amp;-9\\
+  1&amp;3&amp;9
+  \end{array}\right),
+\]</span></p></li>
+<li><p>Sea el sistema</p></li>
+</ol>
+<p><span class="math display">\[\begin{cases}
+     10^{-14}x+y&amp;=1\\
+     x+y&amp;=2
+    \end{cases}
+\]</span></p>
+<pre><code>a.  Grafique cada ecuación en un mismo plano cartesiano. ¿Observa algo particular en la gráfica?
+
+b. Resuelva el  sistema de ecuaciones exactamente
+
+c.  Resuelva el sistema de ecuaciones sin usar Pivoteo por medio de LU
+
+d.  Resuelva el  sistema de ecuaciones usando Pivoteo por medio de LU
+
+e.  Observe las soluciones anteriores, realice una comparación entre ellas ¿Que puede observa? De una conclusión del porque hay tienen diferentes respuestas.</code></pre>
+<ol start="4" type="1">
+<li><p>Sea la matriz (use format short) <span class="math display">\[A=\left(\begin{array}{ccc}
+  1276929.38 &amp;-930737.61&amp;-617.4\\
+  −1930737.61 &amp; 3316209.17&amp;1755.3\\
+  −617.4&amp; 1755.3&amp;2
+  \end{array}\right),
+  b=\left(\begin{array}{c}2\\1\\3\end{array}\right)
+\]</span></p>
+<ol type="a">
+<li><p>Resuelva el siguiente sistema de ecuaciones <span class="math inline">\(Ax=b\)</span> sin usar Pivoteo por medio de LU</p></li>
+<li><p>Resuelva el siguiente sistema de ecuaciones <span class="math inline">\(Ax=b\)</span> usando Pivoteo por medio de LU</p></li>
+<li><p>Observe las soluciones anteriores, compruebe la solución de la forma <span class="math inline">\(b-A*x\)</span>, realice una comparación entre ellas ¿Que puede observar?</p></li>
+</ol></li>
+<li><p>Usando la factorización LU, escriba un pseudocódigo para encontrar la inversa de una matriz. Prográmelo.</p></li>
+<li><p>Para calcular el esfuerzo de una viga normalmente se tiene que resolver un sistema de ecuaciones de la forma <span class="math display">\[\left(\begin{array}{cccccccc}
+4&amp;2&amp;1\\
+2&amp;4&amp;2&amp;1\\
+1&amp;2&amp;4&amp;2&amp;1\\
+&amp;1&amp;2&amp;4&amp;2&amp;1\\
+&amp;&amp;1&amp;2&amp;4&amp;2&amp;1\\
+&amp;&amp;&amp;1&amp;2&amp;4&amp;2\\
+&amp;&amp;&amp;&amp;1&amp;2&amp;4\\
+  \end{array}\right)\left(\begin{array}{c}
+                  x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7
+                 \end{array}\right)=\left(\begin{array}{c}
+                  4\\1\\1\\1\\1\\1\\4
+                 \end{array}\right)
+\]</span></p></li>
+</ol>
+<ol type="a">
+<li><p>¿Para resolver este sistema de ecuaciones que método usaría?</p></li>
+<li><p>Usando el programa de LU sin pivoteo encuentre la inversa de la matriz</p></li>
+<li><p>Usando el programa de LU con pivoteo encuentre la inversa de la matriz</p></li>
+<li><p>Usando el programa de Cholesky encuentre la inversa de la matriz</p></li>
+<li><p>¿Cual de los métodos requiere menos esfuerzo computacional? Compare su respuesta con las del punto a.</p></li>
+</ol>
+<ol start="7" type="1">
+<li>Sea la siguiente matriz, Note que ella es simétrica y se puede probar que es definida positiva</li>
+</ol>
+<p><span class="math display">\[\begin{bmatrix}
+1&amp;1/2&amp;1/3&amp;1/4&amp;1/5&amp;1/6&amp;1/7&amp;1/8&amp;1/9&amp;1/10\\
+1/2&amp;1/3&amp;1/4&amp;1/5&amp;1/6&amp;1/7&amp;1/8&amp;1/9&amp;1/10&amp;1/11\\
+1/3&amp;1/4&amp;1/5&amp;1/6&amp;1/7&amp;1/8&amp;1/9&amp;1/10&amp;1/11&amp;1/13\\
+1/4&amp;1/5&amp;1/6&amp;1/7&amp;1/8&amp;1/9&amp;1/10&amp;1/11&amp;1/13&amp;1/14\\
+1/5&amp;1/6&amp;1/7&amp;1/8&amp;1/9&amp;1/10&amp;1/11&amp;1/13&amp;1/14&amp;1/15\\
+1/6&amp;1/7&amp;1/8&amp;1/9&amp;1/10&amp;1/11&amp;1/13&amp;1/14&amp;1/15&amp;1/16\\
+1/7&amp;1/8&amp;1/9&amp;1/10&amp;1/11&amp;1/13&amp;1/14&amp;1/15&amp;1/16&amp;1/17\\
+1/8&amp;1/9&amp;1/10&amp;1/11&amp;1/13&amp;1/14&amp;1/15&amp;1/16&amp;1/17&amp;1/18\\
+1/9&amp;1/10&amp;1/11&amp;1/13&amp;1/14&amp;1/15&amp;1/16&amp;1/17&amp;1/18&amp;1/19\\
+1/10&amp;1/11&amp;1/13&amp;1/14&amp;1/15&amp;1/16&amp;1/17&amp;1/18&amp;1/19&amp;1/20\\
+\end{bmatrix}\begin{bmatrix}
+                     x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7\\x_8\\x_9\\x_{10}
+                    \end{bmatrix}=\begin{bmatrix}
+                     4\\1\\1\\1\\1\\1\\1\\1\\1\\3
+                    \end{bmatrix}\]</span></p>
+<p>Para obtener esta matriz puede usar desde <strong>scipy.linalg</strong> la función <strong>hilbert</strong></p>
+<ol type="a">
+<li><p>Resuelva el sistema usando Cholescky y compruebe su respuesta</p></li>
+<li><p>resuelva el sistema usando LU y compruebe su respuesta</p></li>
+<li><p>compre las dos repuestas. ¿Son diferentes?</p></li>
+<li><p>Repita esta proceso con hilbert(1000), ¿que pasa? ¿Por que cree que sucede esto?</p></li>
+</ol>
+</section>
+</section>
+<section id="número-de-condición-de-una-matriz" class="level2">
+<h2 class="anchored" data-anchor-id="número-de-condición-de-una-matriz">Número de condición de una matriz</h2>
+<p>Sea <span class="math inline">\(A\)</span> una matriz cuadrada de <span class="math inline">\(n \times n\)</span>, notamos como <span class="math inline">\(\|A\|\)</span> la norma de la matriz <span class="math inline">\(A\)</span> y <span class="math inline">\(\|A^{-1}\|\)</span> es la norma de la matriz inversa de <span class="math inline">\(A\)</span>.</p>
+<p><strong>Teorema</strong> Si <span class="math inline">\(A\)</span> es una matriz invertible, entonces <span class="math inline">\(\kappa_2(A) = \frac{\lambda_{\max}(A)}{\lambda_{\min}(A)}\)</span>, donde <span class="math inline">\(\lambda_{\max}(A)\)</span> es el mayor valor propio de <span class="math inline">\(A\)</span> y <span class="math inline">\(\lambda_{\min}(A)\)</span> es el menor valor propio de <span class="math inline">\(A\)</span>.</p>
+<p><strong>Factor de error de magnificación</strong> El factor de error de magnificación es una medida de la magnitud del error relativo en la solución de un sistema de ecuaciones lineales, <span class="math inline">\(Ax=b\)</span>. El factor de error de magnificación se define como:</p>
+<p>Sea <span class="math inline">\(x_a\)</span> la solución aproximada del sistema de ecuaciones lineales <span class="math inline">\(Ax=b\)</span> y <span class="math inline">\(x\)</span> la solución exacta del sistema de ecuaciones lineales <span class="math inline">\(Ax=b\)</span>. El residual se define como <span class="math inline">\(r = b - Ax_a\)</span>. El error hacia atrás es la norma del residual <span class="math inline">\(\|r\|=\|b-Ax\|\)</span>. El error hacia adelante es la norma de la diferencia entre la solución aproximada y la solución exacta <span class="math inline">\(\|x_a - x\|\)</span>.</p>
+<p><strong>Ejemplo</strong></p>
+<p>Encontrar el error hacia adelante y el error hacia atrás para la solución aproximada <span class="math inline">\(x_a=[1,1]\)</span> del sistema</p>
+<p><span class="math display">\[\begin{bmatrix}1&amp;1\\3&amp;-4\end{bmatrix}\begin{bmatrix}x_1\\x_2\end{bmatrix}=\begin{bmatrix}3\\2\end{bmatrix}\]</span> + Encuentre la solución exacta del sistema de ecuaciones lineales. <span class="math inline">\([2,1]\)</span> + Encuentre el error hacia atrás. + Encuentre el error hacia adelante. <strong>Ejemplo</strong> Encuentre los errores hacia adelante y hacia atrás para la solución aproximada <span class="math inline">\(x_a=[−1, 3.0001]\)</span> de el sistema</p>
+<p><span class="math display">\[\begin{bmatrix}1&amp;1\\1.0001&amp;1\end{bmatrix}\begin{bmatrix}x_1\\x_2\end{bmatrix}=\begin{bmatrix}2\\2.0001\end{bmatrix}\]</span> + Encuentre la solución exacta del sistema de ecuaciones lineales, <span class="math inline">\([1,1]\)</span> + Encuentre el error hacia atrás. + Encuentre el error hacia adelante. Resolviendo el sistema tenemos <span class="math display">\[x =[1,1]\]</span></p>
+<p><strong>Definición</strong> Denotamos el error relativo hacia atrás como <span class="math inline">\(\frac{\|r\|}{\|b\|}\)</span> y el error relativo hacia adelante como <span class="math inline">\(\frac{\|x_a - x\|}{\|x\|}\)</span>.</p>
+<p>Usando la anteriro definición podemos introducir el concepto de <strong>factor de error de magnificación</strong>. El factor de error de magnificación es una medida de la magnitud del error relativo en la solución de un sistema de ecuaciones lineales, <span class="math inline">\(Ax=b\)</span>. El factor de error de magnificación se define como:</p>
+<p><span class="math display">\[factor\ magnificación\ error=\frac{error_{realitco\ hacia\ delante}}{error_{realitco\ hacia\  atras}}=\frac{\frac{||x-x_a||_{\infty}}{||x||_\infty}}{\frac{||r||_\infty}{||b||_\infty}}\]</span></p>
+<p>en el sistema anterior tenemos que <span class="math display">\[40004.0001\%\]</span></p>
+<p>El número de condición de una matriz es una medida de la sensibilidad de la solución de un sistema de ecuaciones lineales a pequeños cambios en los coeficientes de las ecuaciones. El número de condición de una matriz se define como:</p>
+<p><span class="math display">\[\kappa(A) = \|A\| \|A^{-1}\|\]</span></p>
+<p>El numero de condición de una matriz cuadrada se puede interpretar como el máximo factor de ampliación del error posible para resolver <span class="math inline">\(Ax = b\)</span>, sobre todos los lados derechos <span class="math inline">\(b\)</span>.</p>
+<p><strong>Ejemplo</strong> Calculemos el numero de condición de la matriz <span class="math display">\[\begin{bmatrix}1&amp;1\\1.0001&amp;1\end{bmatrix}\]</span></p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the matrix</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">1</span>], [<span class="fl">1.0001</span>, <span class="dv">1</span>]])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the condition number</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>cond <span class="op">=</span> np.linalg.cond(A)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The condition number of the matrix is:"</span>, cond)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The condition number of the matrix is: 40002.00007489988</code></pre>
+</div>
+</div>
+<p>El significado del número de condición es el mismo que en el Capítulo 1. Error de factor de magnificación de una magnitud <span class="math inline">\(cond( A)\)</span> son posibles. En aritmética de coma flotante, No se puede esperar que el error relativo hacia atrás sea menor que <span class="math inline">\(\in_{mach}\)</span>, ya que almacenar las entradas de <span class="math inline">\(b\)</span> ya causan errores de ese tamaño. Según el factor de magnificación, la fuerza relativa Son posibles errores de tamaño <span class="math inline">\(\in_{mach}\cdot cond(A)\)</span> al resolver <span class="math inline">\(Ax = b\)</span>. En otras palabras, si <span class="math inline">\(cond(A) \aprox 10^k\)</span>, deberíamos prepararnos para perder <span class="math inline">\(k\)</span> dígitos de precisión al calcular <span class="math inline">\(x\)</span>.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
